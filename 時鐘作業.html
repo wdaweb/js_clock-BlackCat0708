@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      background-image: url("./素材/sky_background.jpg");
+    }
+
+    #wheel {
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      transform: rotate(0deg);
+      transform-origin: center;
+      filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.8));
+    }
+
+    #wheel:hover {
+      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+    }
+
+    .wheelpic {
+      position: absolute;
+      bottom: -300px;
+      left: -295px;
+    }
+
+    #train {
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      top: 590px;
+      right: 0px;
+      left: 0;
+      transform: translateX(508px);
+    }
+
+    .time {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      border-radius: 1rem;
+      width: 550px;
+      height: 50px;
+      position: absolute;
+      top: 10px;
+      left: 850px;
+    }
+
+    #text {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 5px 35px;
+      color: rgb(255, 255, 255);
+      text-shadow:
+        0 0 10px rgb(0, 255, 255),
+        0 0 25px rgba(0, 255, 255, 0.8),
+        0 0 50px rgba(0, 255, 255, 0.5);
+    }
+
+    .frame {
+      height: 430px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -5%);
+    }
+
+    #clock {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(3px);
+      width: 500px;
+      height: 500px;
+      border: 5px solid rgb(255, 255, 255);
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      box-shadow:
+        0 0 10px rgb(0, 255, 255),
+        0 0 25px rgba(0, 255, 255, 0.8),
+        0 0 50px rgba(0, 255, 255, 0.5)
+    }
+
+    .circle {
+      filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.5));
+    }
+
+    #hour {
+      position: absolute;
+      top: calc(50% - 20px);
+      left: 50%;
+      transform: rotate(0deg);
+      transform-origin: left center;
+      filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.8));
+    }
+
+    #minute {
+      position: absolute;
+      top: calc(50% - 16px);
+      left: 50%;
+      transform: rotate(0deg);
+      transform-origin: left center;
+      filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.8));
+    }
+
+    #second {
+      position: absolute;
+      top: calc(50% - 16px);
+      left: 50%;
+      transform: rotate(0deg);
+      transform-origin: left center;
+      filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.8));
+    }
+
+    .dot {
+      background: cyan;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      box-shadow:
+        0 0 10px rgb(0, 255, 255),
+        0 0 25px rgba(0, 255, 255, 0.8),
+        0 0 50px rgba(0, 255, 255, 0.5)
+    }
+  </style>
+</head>
+
+<body>
+  <div id="train">
+    <img src="./素材/train.png">
+    <div class="time">
+      <p id="text">現在時間</p>
+    </div>
+  </div>
+
+  <img class="frame" src="./素材/frame.png">
+
+  <div id="wheel"><img class="wheelpic" src="./素材/wheel.png"></div>
+
+  <div id="clock">
+    <img class="circle" src="./素材/clock.png">
+    <div id="hour"><img src="./素材/hour.png"></div>
+    <div id="minute"><img src="./素材/minute.png"></div>
+    <div id="second"><img src="./素材/second.png"></div>
+  </div>
+
+  <img class="frame" src="./素材/frame.png">
+  <div class="dot"></div>
+
+
+  <script>
+    const wheel = document.getElementById('wheel')
+    const hour = document.getElementById('hour')
+    const minute = document.getElementById('minute')
+    const second = document.getElementById('second')
+    const clock = document.getElementById('clock')
+    const train = document.getElementById('train')
+    const text = document.getElementById('text')
+
+    const updateClock = () => {
+      const now = new Date()
+      hour.style.transform = `rotate(${30 * now.getHours() - 90}deg)`
+      minute.style.transform = `rotate(${6 * now.getMinutes() - 90}deg)`
+      second.style.transform = `rotate(${6 * now.getSeconds() - 90}deg)`
+      wheel.style.transform = `rotate(${360 - (1 * now.getSeconds())}deg)`
+      clock.style.border = `5px dotted rgb(0, ${4 * now.getSeconds()}, ${20 * now.getHours()})`
+      train.style.transform = `translateX(${-1600 + 35 * now.getSeconds()}px)`
+      text.innerText = `現在時間 ${now.toLocaleString('zh-tw')}`
+    }
+
+    updateClock()
+    setInterval(updateClock, 1000)
+  </script>
+</body>
+
+</html>
