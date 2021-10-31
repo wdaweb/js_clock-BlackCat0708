@@ -35,23 +35,24 @@
       filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.8));
     }
 
-    #wheel:hover {
-      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
-    }
-
     .wheelpic {
       position: absolute;
       bottom: -300px;
       left: -295px;
     }
 
+    .track {
+      width: 100%;
+      height: 100px;
+      position: relative;
+      top: 61%;
+      overflow: hidden;
+    }
+
     #train {
       width: 10px;
       height: 10px;
       position: absolute;
-      top: 590px;
-      right: 0px;
-      left: 0;
       transform: translateX(508px);
     }
 
@@ -155,10 +156,12 @@
 </head>
 
 <body>
-  <div id="train">
-    <img src="./素材/train.png">
-    <div class="time">
-      <p id="text">現在時間</p>
+  <div class="track">
+    <div id="train">
+      <img src="./素材/train.png">
+      <div class="time">
+        <p id="text">現在時間</p>
+      </div>
     </div>
   </div>
 
@@ -192,8 +195,10 @@
       minute.style.transform = `rotate(${6 * now.getMinutes() - 90}deg)`
       second.style.transform = `rotate(${6 * now.getSeconds() - 90}deg)`
       wheel.style.transform = `rotate(${360 - (1 * now.getSeconds())}deg)`
+      wheel.style.filter = `drop-shadow(0 0 10px rgba(0, ${4 * now.getSeconds()}, ${20 * now.getHours()},0.8))`
       clock.style.border = `5px dotted rgb(0, ${4 * now.getSeconds()}, ${20 * now.getHours()})`
-      train.style.transform = `translateX(${-1600 + 35 * now.getSeconds()}px)`
+      clock.style.boxShadow = `0 0 10px rgba(0, ${4 * now.getSeconds()}, ${20 * now.getHours()}), 0 0 25px rgba(0, ${4 * now.getSeconds()}, ${20 * now.getHours()},0.8),0 0 50px rgba(0, ${4 * now.getSeconds()}, ${20 * now.getHours()},0.5)`
+      train.style.transform = `translateX(${-1600 + 60 * now.getSeconds()}px)`
       text.innerText = `現在時間 ${now.toLocaleString('zh-tw')}`
     }
 
